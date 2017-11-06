@@ -19,6 +19,35 @@ class Graph:
 
         return cls(vertices=vertices, edges=edges)
 
+    @classmethod
+    def create_from_user_input(cls):
+        while True:
+            while True:
+                try:
+                    vertex_count = int(input('Podaj liczbę wierzchołków: '))
+                except ValueError:
+                    print('Podana wartość jest niepoprawna.')
+                    continue
+                else:
+                    break
+
+            edges = []
+            while True:
+                try:
+                    edge_input = input('Dodaj krawędź (w formacie v1,v2) [wpisz S by zakończyć dodawanie krawędzi]: ')
+                    if edge_input == "S":
+                        break
+                    edge_input = edge_input.split(',')
+                    edge = int(edge_input[0]), int(edge_input[1])
+                    edges.append(edge)
+                except ValueError:
+                    print('Podana krawędź ma niepoprawny format.')
+                    continue
+
+            vertices = {v for v in range(vertex_count)}
+
+            return cls(vertices=vertices, edges=edges)
+
     def __str__(self):
         return pformat(self.n_matrix)
 
@@ -78,7 +107,7 @@ class Graph:
 
         corrected_edges = []
 
-        for edge in [e for e in self.edges]:
+        for edge in self.edges:
             if vertex in edge:
                 self.edges.remove(edge)
             elif edge[0] > vertex or edge[1] > vertex:
