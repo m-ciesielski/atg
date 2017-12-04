@@ -11,14 +11,14 @@ def dfs_kosaraju(graph: Digraph, root_vertex, vertex_stack: list, visited_vertex
                      visited_vertices=vertex_stack)
 
 
-def kosaraju(graph: Digraph):
+def kosaraju(graph: Digraph) -> list:
     connected_components = []
     vertex_stack = []  # S
     visited_vertex_map = {v: False for v in graph.vertices}
 
     while len(vertex_stack) < len(graph.vertices):
-        random_vertex = list(graph.vertices)[0]
-        dfs_kosaraju(graph, random_vertex, vertex_stack=vertex_stack,
+        dfs_vertex = list(graph.vertices)[0]
+        dfs_kosaraju(graph, dfs_vertex, vertex_stack=vertex_stack,
                      visited_vertex_map=visited_vertex_map)
 
     vertex_stack = list(reversed(vertex_stack))
@@ -33,7 +33,8 @@ def kosaraju(graph: Digraph):
         connected_component = set(connected_component)
         connected_components.append(connected_component)
 
-        remaining_edges = [edge for edge in transposed_graph.edges if edge[0] and edge[1] not in connected_component]
+        remaining_edges = [edge for edge in transposed_graph.edges
+                           if edge[0] and edge[1] not in connected_component]
         transposed_graph = Digraph(edges=remaining_edges,
                                    vertices=transposed_graph.vertices)
         for component_vertex in connected_component:

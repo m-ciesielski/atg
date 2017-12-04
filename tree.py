@@ -12,7 +12,6 @@ class Tree(Graph):
 
     @staticmethod
     def _validate_tree(vertices: set, edges: list):
-        # TODO: sprawdzenie czy drzewo zawiera cykl
         if len(edges) != (len(vertices) - 1):
             return False
         else:
@@ -72,6 +71,12 @@ def test():
     test_tree_4 = Tree({0, 1, 2, 3, 4, 5},
                        [(0, 1), (0, 2), (0, 3), (1, 4), (1, 5)])
     print(test_tree_4.find_center())
+    test_tree_5 = Tree({0, 1, 2, 3, 4, 5},
+                       [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)])
+    print(test_tree_5.find_center())
+    test_tree_6 = Tree({0, 1, 2, 3, 4},
+                       [(0, 1), (1, 2), (2, 3), (3, 4)])
+    print(test_tree_6.find_center())
 
 if __name__ == '__main__':
     g = Tree.create_from_user_input()
