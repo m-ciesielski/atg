@@ -4,14 +4,16 @@ from tree import Tree
 
 def _dfs_visit_vertex(graph: Graph, vertex, visited_vertex_map: dict,
                       visited_edges: list or None,
-                      visited_vertices: set or None):
+                      visited_vertices: list or set or None):
     visited_vertex_map[vertex] = True
+    if visited_vertices is not None:
+        if isinstance(visited_vertices, list):
+            visited_vertices.append(vertex)
+        else:
+            visited_vertices.add(vertex)
     for neighbour_vertex in graph.get_vertex_neighbours(vertex):
         visited = visited_vertex_map[neighbour_vertex]
         if not visited:
-            if visited_vertices is not None:
-                visited_vertices.add(vertex)
-                visited_vertices.add(neighbour_vertex)
             if visited_edges is not None:
                 visited_edges.append((vertex, neighbour_vertex))
             _dfs_visit_vertex(graph, neighbour_vertex, visited_vertex_map,

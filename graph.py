@@ -256,6 +256,7 @@ def test_create_graph():
         pass
     assert ng is None
 
+
 if __name__ == '__main__':
     test_graph()
     test_c3_graph()
