@@ -1,15 +1,3 @@
-"""
-MakeSet(x) initializes disjoint set for object x
-Find(x) returns representative object of the set containing x
-Union(x,y) makes two sets containing x and y respectively into one set
-
-Some Applications:
-- Kruskal's algorithm for finding minimal spanning trees
-- Finding connected components in graphs
-- Finding connected components in images (binary)
-"""
-
-
 class DisjointSet:
     def __init__(self, v):
         self.v = v
@@ -28,7 +16,7 @@ def union(x: DisjointSet, y: DisjointSet):
         y_root.parent = x_root
     elif x_root.rank < y_root.rank:
         x_root.parent = y_root
-    elif x_root != y_root: # Unless x and y are already in same set, merge them
+    elif x_root != y_root:
         y_root.parent = x_root
         x_root.rank += 1
 

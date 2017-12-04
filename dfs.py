@@ -2,9 +2,9 @@ from graph import Graph
 from tree import Tree
 
 
-def _dfs_visit_vertex(graph: Graph, vertex, visited_vertex_map: dict,
-                      visited_edges: list or None,
-                      visited_vertices: list or set or None):
+def dfs_visit_vertex(graph: Graph, vertex, visited_vertex_map: dict,
+                     visited_edges: list or None,
+                     visited_vertices: list or set or None):
     visited_vertex_map[vertex] = True
     if visited_vertices is not None:
         if isinstance(visited_vertices, list):
@@ -16,8 +16,8 @@ def _dfs_visit_vertex(graph: Graph, vertex, visited_vertex_map: dict,
         if not visited:
             if visited_edges is not None:
                 visited_edges.append((vertex, neighbour_vertex))
-            _dfs_visit_vertex(graph, neighbour_vertex, visited_vertex_map,
-                              visited_edges, visited_vertices)
+            dfs_visit_vertex(graph, neighbour_vertex, visited_vertex_map,
+                             visited_edges, visited_vertices)
 
 
 def dfs_spanning_tree(graph: Graph, root_vertex) -> Tree:
@@ -27,9 +27,9 @@ def dfs_spanning_tree(graph: Graph, root_vertex) -> Tree:
     spanning_tree_edges = []
     spanning_tree = None
     visited_vertex_map = {v: False for v in graph.vertices}
-    _dfs_visit_vertex(graph, root_vertex, visited_vertex_map,
-                      visited_edges=spanning_tree_edges,
-                      visited_vertices=None)
+    dfs_visit_vertex(graph, root_vertex, visited_vertex_map,
+                     visited_edges=spanning_tree_edges,
+                     visited_vertices=None)
 
     spanning_tree_vertices = set()
     for spanning_edge in spanning_tree_edges:
@@ -50,9 +50,9 @@ def dfs_connected_components(graph: Graph) -> set:
     for vertex in visited_vertex_map:
         visited = visited_vertex_map[vertex]
         if not visited:
-            _dfs_visit_vertex(graph, vertex, visited_vertex_map,
-                              visited_edges=None,
-                              visited_vertices=connected_component_vertices)
+            dfs_visit_vertex(graph, vertex, visited_vertex_map,
+                             visited_edges=None,
+                             visited_vertices=connected_component_vertices)
             if not connected_component_vertices:
                 connected_component_vertices.add(vertex)
             connected_components.add(frozenset(connected_component_vertices))

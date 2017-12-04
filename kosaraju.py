@@ -1,16 +1,14 @@
-from random import choice
-
 from digraph import Digraph
-from dfs import _dfs_visit_vertex
+from dfs import dfs_visit_vertex
 
 
 def dfs_kosaraju(graph: Digraph, root_vertex, vertex_stack: list, visited_vertex_map: dict):
     if root_vertex not in graph.vertices:
         raise ValueError('Wierzchołek startowy nie należy do grafu.')
 
-    _dfs_visit_vertex(graph, root_vertex, visited_vertex_map,
-                      visited_edges=None,
-                      visited_vertices=vertex_stack)
+    dfs_visit_vertex(graph, root_vertex, visited_vertex_map,
+                     visited_edges=None,
+                     visited_vertices=vertex_stack)
 
 
 def kosaraju(graph: Digraph):
@@ -48,11 +46,12 @@ def kosaraju(graph: Digraph):
 
 
 if __name__ == '__main__':
-    test_digraph = Digraph(vertices=set([i for i in range(0, 9)]),
-                           edges=[(0, 1), (0, 2), (0, 3),
-                                  (2, 4), (4, 5),
-                                  (5, 6), (5, 7), (5, 2),
-                                  (6, 2),
-                                  (7, 8),
-                                  (8, 7)])
-    print('Składowe spójności: {}'.format(kosaraju(test_digraph)))
+    # test_digraph = Digraph(vertices=set([i for i in range(0, 9)]),
+    #                        edges=[(0, 1), (0, 2), (0, 3),
+    #                               (2, 4), (4, 5),
+    #                               (5, 6), (5, 7), (5, 2),
+    #                               (6, 2),
+    #                               (7, 8),
+    #                               (8, 7)])
+    g = Digraph.create_from_user_input()
+    print('Składowe spójności: {}'.format(kosaraju(g)))
