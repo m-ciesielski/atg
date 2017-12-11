@@ -70,6 +70,7 @@ if __name__ == '__main__':
     g = Graph.create_from_user_input()
     spanning_tree = dfs_spanning_tree(g, list(g.vertices)[0])
     print('Drzewo spinające: {}'.format(spanning_tree))
-    print('Krawędzie drzewa spinającego: {}'.format(spanning_tree.edges))
+    if spanning_tree:
+        print('Krawędzie drzewa spinającego: {}'.format(spanning_tree.edges))
     print('Składowe spójności: {}'.format(dfs_connected_components(g)))
     print('Graf spójny: {}'.format(is_graph_connected(g)))
