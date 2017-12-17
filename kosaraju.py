@@ -64,13 +64,13 @@ def kosaraju(graph: Digraph) -> list:
 
 
 if __name__ == '__main__':
-    # test_digraph = Digraph(vertices=set([i for i in range(0, 9)]),
-    #                        edges=[(0, 1), (0, 2), (0, 3),
-    #                               (3, 4),
-    #                               (4, 5),
-    #                               (5, 6), (5, 7), (5, 2),
-    #                               (6, 3),
-    #                               (7, 8),
-    #                               (8, 7)])
-    g = Digraph.create_from_user_input()
-    print('Składowe spójności: {}'.format(kosaraju(g)))
+    test_digraph = Digraph(vertices=set([i for i in range(0, 9)]),
+                           edges=[(0, 1), (0, 2), (0, 3),
+                                  (3, 4),
+                                  (4, 5),
+                                  (5, 6), (5, 7), (5, 2),
+                                  (6, 3),
+                                  (7, 8),
+                                  (8, 7)])
+    # g = Digraph.create_from_user_input()
+    print('Składowe spójności: {}'.format(kosaraju(test_digraph)))
