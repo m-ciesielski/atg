@@ -112,16 +112,16 @@ def dfs_topological_sort(network: DirectedNetwork) -> list:
 
 
 if __name__ == '__main__':
-    test_network = DirectedNetwork(edges=[(0, 1), (0, 3),
-                                          (3, 1), (3, 4),
-                                          (1, 2), (2, 4),
-                                          (2, 5), (4, 5)
-                                          ],
-                                   weights=[1, 2, -4, 3, 6, 1, -2, 1],
-                                   vertices=set([i for i in range(0, 6)]),
-                                   start_vertex=0,
-                                   end_vertex=5
-                                   )
+    # test_network = DirectedNetwork(edges=[(0, 1), (0, 3),
+    #                                       (3, 1), (3, 4),
+    #                                       (1, 2), (2, 4),
+    #                                       (2, 5), (4, 5)
+    #                                       ],
+    #                                weights=[1, 2, -4, 3, 6, 1, -2, 1],
+    #                                vertices=set([i for i in range(0, 6)]),
+    #                                start_vertex=0,
+    #                                end_vertex=5
+    #                                )
     test_network_2 = DirectedNetwork(edges=[(0, 1), (0, 3),
                                             (3, 1), (3, 4),
                                             (1, 2), (2, 4),
@@ -137,6 +137,7 @@ if __name__ == '__main__':
     network = test_network_2
 
     print('Minimalny czas realizacji: {}'.format(network.get_process_minimal_finish_time()))
+    print('Porządek topologiczny: {}'.format(dfs_topological_sort(network)))
     for task in network.edges:
         print('Minimalny czas rozpoczęcia zadania {}: {}'.format(task, network.get_task_minimal_start_time(task)))
         print('Maksymalny czas rozpoczęcia zadania {}: {}\n'.format(task, network.get_task_maximal_start_time(task)))

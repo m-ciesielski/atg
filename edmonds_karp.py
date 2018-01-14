@@ -16,7 +16,6 @@ class VertexTrait:
 
 
 def edmonds_karp(network: DirectedNetwork):
-    # maksymalne przeplywy dla odwroynych lukow w sieci rezydualnej
     flows = {edge: 0 for edge in network.edges}
     flows.update({tuple(reversed(edge)): 0 for edge in network.edges})
     traits = {vertex: None for vertex in network.vertices}
@@ -28,7 +27,6 @@ def edmonds_karp(network: DirectedNetwork):
     traits[network.start_vertex] = VertexTrait(sign='-', predecessor=None, flow_value=float('inf'))
     while vertex_queue:
         vertex = vertex_queue.popleft()
-        # ocechuj wierzcholki osiagalne z vertex
         for neighbour in network.get_vertex_neighbours(vertex):
             edge = (vertex, neighbour)
             reversed_edge = tuple(reversed(edge))
@@ -45,7 +43,6 @@ def edmonds_karp(network: DirectedNetwork):
 
             if network.end_vertex in vertex_queue:
                 max_path = []
-                # Powiększ przepływ wykorzystując cechowanie
                 augmenting_path_vertex = network.end_vertex
                 flow_to_increase = traits[augmenting_path_vertex].flow_value
                 max_flow = max_flow + flow_to_increase
@@ -61,12 +58,16 @@ def edmonds_karp(network: DirectedNetwork):
 
                 max_path.append(network.start_vertex)
                 max_path = list(reversed(max_path))
+                print(f'Ścieżka powiększająca: {max_path}')
                 traits = {vertex: None for vertex in network.vertices}
                 traits[network.start_vertex] = VertexTrait(sign='-', predecessor=None, flow_value=float('inf'))
                 vertex_queue = deque([network.start_vertex])
 
-    minimal_cut = network.vertices - set(max_path)
-    return max_flow, minimal_cut
+    vertices_with_traits = set([v for v, trait in traits.items() if trait is not None])
+    minimal_cut_vertices = network.vertices - vertices_with_traits
+    minimal_cut = [(u, v) for u, v in network.edges if u in vertices_with_traits and v in minimal_cut_vertices]
+    return max_flow, minimal_cut, {edge: flow for edge, flow in flows.items() if flow > 0}
+
 
 if __name__ == '__main__':
     test_network = DirectedNetwork(edges=[(0, 1), (1, 3),
@@ -90,6 +91,24 @@ if __name__ == '__main__':
                                      vertices=set([i for i in range(0, 6)]),
                                      start_vertex=0,
                                      end_vertex=5)
-    # TODO: check for invalid networks
-    print(edmonds_karp(test_network))
-    print(edmonds_karp(test_network_2))
+    test_network_3 = DirectedNetwork(edges=[(0, 1), (0, 2),
+                                            (1, 2), (1, 3),
+                                            (2, 1), (2, 4),
+                                            (3, 2)],
+                                     weights=[16, 13,
+                                              10, 12,
+                                              4, 14,
+                                              9],
+                                     vertices=set([i for i in range(0, 6)]),
+                                     start_vertex=0,
+                                     end_vertex=5)
+    # network = DirectedNetwork.create_from_user_input()
+
+    max_flow, minimal_cut, flows = edmonds_karp(test_network)
+    print(f'Maksymalny przepływ {max_flow}, minimalny przekrój: {minimal_cut}, Przepływy: {flows}')
+    print()
+    max_flow, minimal_cut, flows = edmonds_karp(test_network_2)
+    print(f'Maksymalny przepływ {max_flow}, minimalny przekrój: {minimal_cut}, Przepływy: {flows}')
+    print()
+    max_flow, minimal_cut, flows = edmonds_karp(test_network_3)
+    print(f'Maksymalny przepływ {max_flow}, minimalny przekrój: {minimal_cut}, Przepływy: {flows}')
